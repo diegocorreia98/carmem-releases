@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Carmem — limpeza para Mac</title>
-  <meta name="description" content="O Carmem limpa caches, remove apps por completo e cuida do seu Mac sozinho. Grátis e sem anúncios.">
+  <meta name="description" content="O Carmem limpa caches, remove apps por completo, cuida do seu Mac sozinho e conversa com você por texto ou voz. Grátis e sem anúncios.">
   <meta property="og:title" content="Carmem — limpeza para Mac">
-  <meta property="og:description" content="Limpe caches, remova apps por completo e deixe a limpeza automática. Grátis e sem anúncios.">
+  <meta property="og:description" content="Limpe caches, remova apps por completo e pergunte à Carmem, por texto ou voz, o que está pesando no seu Mac. Grátis e sem anúncios.">
   <meta property="og:image" content="icon.png">
   <link rel="icon" href="icon.png">
   <style>
@@ -52,11 +52,15 @@
 
     main { flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); align-items: center; gap: clamp(28px, 5vw, 72px); padding: 24px 0; }
 
+    .new { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 18px; padding: 5px 14px 5px 5px; border-radius: 999px;
+      background: var(--glass); border: 1px solid var(--stroke); font-size: 13.5px; font-weight: 500; color: var(--muted); backdrop-filter: blur(12px); }
+    .new b { padding: 3px 9px; border-radius: 999px; background: linear-gradient(90deg, #ff8cc6, #b9a4ff); color: #1d0d2c; font-size: 11.5px; font-weight: 800; letter-spacing: 0.04em; }
     h1 { font-size: clamp(36px, 4.6vw, 60px); line-height: 1.04; letter-spacing: -0.03em; font-weight: 800; }
     h1 span { background: linear-gradient(90deg, #ffd1e8, #ff8cc6 45%, #b9a4ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .lead { margin-top: 18px; font-size: clamp(16px, 1.35vw, 19px); line-height: 1.5; color: var(--muted); max-width: 34em; }
 
     .features { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+    .features li.ai { background: linear-gradient(90deg, rgba(255,140,198,0.3), rgba(185,164,255,0.3)); border-color: rgba(255,255,255,0.3); }
     .features li { padding: 7px 13px; border-radius: 999px; background: var(--glass); border: 1px solid var(--stroke); font-size: 13.5px; font-weight: 500; backdrop-filter: blur(12px); }
 
     .cta { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
@@ -116,13 +120,15 @@
 
     <main>
       <section>
+        <p class="new"><b>NOVO</b> Fale com a Carmem por texto ou voz</p>
         <h1>Seu Mac limpo e leve, <span>sem pagar nada.</span></h1>
-        <p class="lead">O Carmem encontra caches, restos de apps que você já apagou e itens quebrados que o macOS acumula — e manda tudo para a Lixeira, pronto para recuperar se precisar.</p>
+        <p class="lead">O Carmem encontra caches, restos de apps que você já apagou e itens quebrados que o macOS acumula. E agora conversa: pergunte no chat (⌘K) ou pela voz (⌥ Espaço) por que o Mac está lento ou o que dá para apagar, e a Carmem olha o seu Mac antes de responder. Nada é limpo sem o seu clique.</p>
 
         <ul class="features">
+          <li class="ai">✦ Chat e voz com IA</li>
           <li>Lixo do sistema</li>
           <li>Desinstalador completo</li>
-          <li>Mapa do disco</li>
+          <li>Mapa do disco e duplicados</li>
           <li>Limpeza automática</li>
           <li>Saúde do Mac</li>
         </ul>
@@ -141,19 +147,20 @@
             <li>Abra o arquivo baixado e arraste o Carmem para a pasta Aplicativos.</li>
             <li>Na primeira vez, se o macOS disser que não pode verificar o app, vá em <b>Ajustes do Sistema → Privacidade e Segurança</b> e clique em <b>Abrir Mesmo Assim</b>.</li>
             <li>Quando o Carmem pedir, conceda <b>Acesso Total ao Disco</b> para a varredura enxergar tudo.</li>
+            <li>Para conversar com a Carmem, escolha a IA em <b>Ajustes → Inteligência artificial</b>: Anthropic, OpenAI, OpenRouter, Groq ou Ollama (que roda no próprio Mac). É opcional, e só nomes, tamanhos e métricas são enviados, nunca o conteúdo dos seus arquivos.</li>
             <li>Pronto: as próximas versões chegam sozinhas pelo próprio app.</li>
           </ol>
         </details>
       </section>
 
       <div class="shot">
-        <img src="screenshot.webp" alt="Janela do Carmem com a Visão geral e o botão Varrer" width="1357" height="917">
+        <img src="screenshot.webp" alt="Janela do Carmem com a Visão geral, o botão Varrer e o atalho Fale com a Carmem" width="980" height="692">
       </div>
     </main>
 
     <footer>
       <span>Feito por Diego Beu Correia</span>
-      <span>Tudo vai para a Lixeira: nada é apagado sem você ver.</span>
+      <span>Por padrão, tudo vai para a Lixeira: nada é apagado sem você ver.</span>
       <button id="pix" type="button">♥ Apoie o projeto (copiar PIX)</button>
     </footer>
   </div>
