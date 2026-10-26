@@ -3,188 +3,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0a0a">
   <title>Carmem — limpeza para Mac</title>
-  <meta name="description" content="O Carmem limpa caches, remove apps por completo, cuida do seu Mac sozinho e conversa com você por texto ou voz. Grátis e sem anúncios.">
+  <meta name="description" content="O Carmem limpa o seu Mac e agora mora no notch: converse por voz em tempo real e peça para a Carmem abrir apps, organizar arquivos e fazer tarefas por você. Grátis e sem anúncios.">
   <meta property="og:title" content="Carmem — limpeza para Mac">
-  <meta property="og:description" content="Limpe caches, remova apps por completo e pergunte à Carmem, por texto ou voz, o que está pesando no seu Mac. Grátis e sem anúncios.">
+  <meta property="og:description" content="Limpeza para Mac com uma assistente no notch: voz em tempo real, um agente que opera o Mac por você e uma mascote com humor. Grátis e sem anúncios.">
   <meta property="og:image" content="icon.png">
   <link rel="icon" href="icon.png">
-  <style>
-    :root {
-      --bg: #1c0b33;
-      --pink: #e23a9c;
-      --carmine: #cc1f54;
-      --violet: #6a3cff;
-      --text: #ffffff;
-      --muted: rgba(255, 255, 255, 0.72);
-      --faint: rgba(255, 255, 255, 0.5);
-      --glass: rgba(255, 255, 255, 0.08);
-      --stroke: rgba(255, 255, 255, 0.14);
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
-
-    /* Fundo: gradiente com manchas de cor flutuando, como no app. */
-    .backdrop { position: fixed; inset: 0; z-index: -1; overflow: hidden;
-      background: linear-gradient(135deg, #a3175b 0%, #52117a 50%, #1f0b45 100%); }
-    .blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.7; will-change: transform; }
-    .blob.one { width: 55vw; height: 55vw; left: -10vw; top: -15vw; background: radial-gradient(circle, rgba(255,140,198,0.55), transparent 65%); animation: drift-a 26s ease-in-out infinite alternate; }
-    .blob.two { width: 60vw; height: 60vw; right: -15vw; bottom: -25vw; background: radial-gradient(circle, rgba(163,23,91,0.9), transparent 65%); animation: drift-b 32s ease-in-out infinite alternate; }
-    .blob.three { width: 40vw; height: 40vw; left: 40vw; top: 20vh; background: radial-gradient(circle, rgba(122,99,255,0.45), transparent 65%); animation: drift-c 22s ease-in-out infinite alternate; }
-    @keyframes drift-a { to { transform: translate(18vw, 12vh) scale(1.1); } }
-    @keyframes drift-b { to { transform: translate(-20vw, -14vh) scale(0.95); } }
-    @keyframes drift-c { to { transform: translate(-16vw, 18vh) scale(1.15); } }
-
-    .page { min-height: 100vh; display: flex; flex-direction: column; padding: 28px clamp(20px, 5vw, 64px); }
-
-    header { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; }
-    header img { width: 32px; height: 32px; }
-    header .spacer { flex: 1; }
-    header a { color: var(--muted); font-weight: 500; font-size: 14px; text-decoration: none; }
-    header a:hover { color: var(--text); }
-
-    main { flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); align-items: center; gap: clamp(28px, 5vw, 72px); padding: 24px 0; }
-
-    .new { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 18px; padding: 5px 14px 5px 5px; border-radius: 999px;
-      background: var(--glass); border: 1px solid var(--stroke); font-size: 13.5px; font-weight: 500; color: var(--muted); backdrop-filter: blur(12px); }
-    .new b { padding: 3px 9px; border-radius: 999px; background: linear-gradient(90deg, #ff8cc6, #b9a4ff); color: #1d0d2c; font-size: 11.5px; font-weight: 800; letter-spacing: 0.04em; }
-    h1 { font-size: clamp(36px, 4.6vw, 60px); line-height: 1.04; letter-spacing: -0.03em; font-weight: 800; }
-    h1 span { background: linear-gradient(90deg, #ffd1e8, #ff8cc6 45%, #b9a4ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .lead { margin-top: 18px; font-size: clamp(16px, 1.35vw, 19px); line-height: 1.5; color: var(--muted); max-width: 34em; }
-
-    .features { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
-    .features li.ai { background: linear-gradient(90deg, rgba(255,140,198,0.3), rgba(185,164,255,0.3)); border-color: rgba(255,255,255,0.3); }
-    .features li { padding: 7px 13px; border-radius: 999px; background: var(--glass); border: 1px solid var(--stroke); font-size: 13.5px; font-weight: 500; backdrop-filter: blur(12px); }
-
-    .cta { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
-    .download { display: inline-flex; align-items: center; gap: 10px; padding: 15px 26px; border-radius: 999px;
-      background: #fff; color: #1d0d2c; font-weight: 700; font-size: 17px; text-decoration: none;
-      box-shadow: 0 10px 30px rgba(226, 58, 156, 0.45), 0 0 0 0 rgba(255,255,255,0.6);
-      transition: transform 0.2s cubic-bezier(.2,.8,.2,1), box-shadow 0.2s; animation: pulse 2.6s ease-out infinite; }
-    .download:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 16px 40px rgba(226, 58, 156, 0.6); }
-    .download:active { transform: scale(0.97); }
-    .download svg { width: 20px; height: 20px; }
-    @keyframes pulse { 0% { box-shadow: 0 10px 30px rgba(226,58,156,0.45), 0 0 0 0 rgba(255,255,255,0.45); }
-                        70% { box-shadow: 0 10px 30px rgba(226,58,156,0.45), 0 0 0 16px rgba(255,255,255,0); }
-                        100% { box-shadow: 0 10px 30px rgba(226,58,156,0.45), 0 0 0 0 rgba(255,255,255,0); } }
-    .meta { font-size: 13px; color: var(--faint); line-height: 1.5; }
-
-    details { margin-top: 22px; max-width: 34em; font-size: 13.5px; color: var(--muted); }
-    summary { cursor: pointer; color: var(--text); font-weight: 600; list-style: none; display: inline-flex; align-items: center; gap: 6px; }
-    summary::-webkit-details-marker { display: none; }
-    summary::before { content: "›"; display: inline-block; transition: transform 0.2s; font-size: 18px; line-height: 1; }
-    details[open] summary::before { transform: rotate(90deg); }
-    details ol { margin: 10px 0 0 20px; line-height: 1.6; }
-
-    .shot { position: relative; }
-    .shot img { width: 100%; height: auto; display: block; transform: perspective(1800px) rotateY(-7deg) rotateX(3deg);
-      transition: transform 0.6s cubic-bezier(.2,.8,.2,1); filter: drop-shadow(0 40px 60px rgba(10, 0, 30, 0.5)); }
-    .shot:hover img { transform: perspective(1800px) rotateY(0) rotateX(0); }
-
-    footer { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; font-size: 13px; color: var(--faint); }
-    footer button { background: none; border: none; color: var(--muted); font: inherit; cursor: pointer; padding: 0; }
-    footer button:hover { color: var(--text); }
-    .toast { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 20px); opacity: 0; pointer-events: none;
-      background: #fff; color: #1d0d2c; padding: 10px 18px; border-radius: 999px; font-weight: 600; font-size: 14px;
-      transition: opacity 0.25s, transform 0.25s; }
-    .toast.show { opacity: 1; transform: translate(-50%, 0); }
-
-    @media (max-width: 860px) {
-      main { grid-template-columns: minmax(0, 1fr); text-align: left; }
-      .shot { order: 2; }
-      .shot img { transform: none; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .blob, .download { animation: none; }
-      .shot img, .shot:hover img { transform: none; transition: none; }
-    }
-  </style>
-</head>
-<body>
-  <div class="backdrop" aria-hidden="true"><div class="blob one"></div><div class="blob two"></div><div class="blob three"></div></div>
-
-  <div class="page">
-    <header>
-      <img src="icon.webp" alt="" width="32" height="32">
-      Carmem
-      <span class="spacer"></span>
-      <a href="https://github.com/diegocorreia98/carmem-releases/releases">Versões anteriores</a>
-    </header>
-
-    <main>
-      <section>
-        <p class="new"><b>NOVO</b> Fale com a Carmem por texto ou voz</p>
-        <h1>Seu Mac limpo e leve, <span>sem pagar nada.</span></h1>
-        <p class="lead">O Carmem encontra caches, restos de apps que você já apagou e itens quebrados que o macOS acumula. E agora conversa: pergunte no chat (⌘K) ou pela voz (⌥ Espaço) por que o Mac está lento ou o que dá para apagar, e a Carmem olha o seu Mac antes de responder. Nada é limpo sem o seu clique.</p>
-
-        <ul class="features">
-          <li class="ai">✦ Chat e voz com IA</li>
-          <li>Lixo do sistema</li>
-          <li>Desinstalador completo</li>
-          <li>Mapa do disco e duplicados</li>
-          <li>Limpeza automática</li>
-          <li>Saúde do Mac</li>
-        </ul>
-
-        <div class="cta">
-          <a class="download" id="download" href="https://github.com/diegocorreia98/carmem-releases/releases/latest/download/Carmem.dmg">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.37 1.43c0 1.14-.42 2.2-1.12 2.98-.84.93-2.2 1.65-3.3 1.56-.14-1.1.41-2.26 1.12-3 .8-.86 2.17-1.5 3.3-1.54zM20.5 17.3c-.55 1.27-.82 1.84-1.53 2.96-.99 1.57-2.39 3.52-4.12 3.53-1.54.02-1.93-1-4.02-.99-2.09.01-2.52 1.01-4.06.99-1.73-.02-3.05-1.78-4.04-3.35C-.04 16.04-.33 10.9 1.44 8.2c1.25-1.92 3.23-3.04 5.09-3.04 1.89 0 3.08 1.04 4.65 1.04 1.52 0 2.45-1.04 4.64-1.04 1.65 0 3.41.9 4.66 2.46-4.1 2.24-3.43 8.09.02 9.68z"/></svg>
-            Baixar para Mac
-          </a>
-          <p class="meta"><span id="version">Grátis</span> · macOS 14 ou superior<br>Apple Silicon e Intel · sem anúncios</p>
-        </div>
-
-        <details>
-          <summary>Como instalar</summary>
-          <ol>
-            <li>Abra o arquivo baixado e arraste o Carmem para a pasta Aplicativos.</li>
-            <li>Na primeira vez, se o macOS disser que não pode verificar o app, vá em <b>Ajustes do Sistema → Privacidade e Segurança</b> e clique em <b>Abrir Mesmo Assim</b>.</li>
-            <li>Quando o Carmem pedir, conceda <b>Acesso Total ao Disco</b> para a varredura enxergar tudo.</li>
-            <li>Para conversar com a Carmem, escolha a IA em <b>Ajustes → Inteligência artificial</b>: Anthropic, OpenAI, OpenRouter, Groq ou Ollama (que roda no próprio Mac). É opcional, e só nomes, tamanhos e métricas são enviados, nunca o conteúdo dos seus arquivos.</li>
-            <li>Pronto: as próximas versões chegam sozinhas pelo próprio app.</li>
-          </ol>
-        </details>
-      </section>
-
-      <div class="shot">
-        <img src="screenshot.webp" alt="Janela do Carmem com a Visão geral, o botão Varrer e o atalho Fale com a Carmem" width="980" height="692">
-      </div>
-    </main>
-
-    <footer>
-      <span>Feito por Diego Beu Correia</span>
-      <span>Por padrão, tudo vai para a Lixeira: nada é apagado sem você ver.</span>
-      <button id="pix" type="button">♥ Apoie o projeto (copiar PIX)</button>
-    </footer>
-  </div>
-
-  <div class="toast" id="toast" role="status">Código PIX copiado</div>
-
   <script>
-    // Mostra a versão publicada mais recente (a página não precisa ser atualizada a cada release).
-    fetch("https://api.github.com/repos/diegocorreia98/carmem-releases/releases/latest")
-      .then(r => r.ok ? r.json() : null)
-      .then(release => {
-        if (release && release.tag_name) {
-          document.getElementById("version").textContent = "Grátis · versão " + release.tag_name.replace(/^v/, "");
-        }
-      })
-      .catch(() => {});
-
-    const pix = "00020126360014br.gov.bcb.pix0114367645210001625204000053039865802BR5925DIEGO BEU CORREIA 08600756008Umuarama62290525DIEGOBEU00000725936819ASA630431D2";
-    document.getElementById("pix").addEventListener("click", async () => {
-      try { await navigator.clipboard.writeText(pix); } catch (_) { return; }
-      const toast = document.getElementById("toast");
-      toast.classList.add("show");
-      setTimeout(() => toast.classList.remove("show"), 1800);
-    });
+    // Tema antes de pintar (sem piscar): o escolhido, ou o do sistema.
+    try {
+      var saved = localStorage.getItem("carmem-theme");
+      var dark = saved ? saved === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+      document.documentElement.classList.toggle("dark", dark);
+    } catch (e) { document.documentElement.classList.add("dark"); }
   </script>
+  <script type="module" crossorigin src="./assets/index-DmvKKZLp.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-uCXv3wus.css">
+</head>
+<body class="bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100">
+  <div id="root"></div>
 </body>
 </html>
